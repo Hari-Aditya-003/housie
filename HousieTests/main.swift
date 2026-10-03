@@ -67,6 +67,27 @@ private func testResetRestoresTheOriginalCallerBoard() {
     }
 
 @MainActor
+private func testConvenienceDrawsAndFinishedState() {
+    var manualGame = HousieGame()
+    check(manualGame.drawNext() != nil, "random manual draw should return a ball")
+
+    var automaticGame = HousieGame()
+    automaticGame.play()
+    check(automaticGame.drawAutomatically() != nil, "random automatic draw should run while playing")
+
+    var readyGame = HousieGame()
+    readyGame.pause()
+    check(readyGame.status == .ready, "pause should not alter a ready game")
+
+    var finishedGame = HousieGame()
+    for _ in 1...90 {
+        _ = finishedGame.drawNext(using: { _ in 0 })
+    }
+    finishedGame.play()
+    check(finishedGame.status == .finished, "play should not restart a finished game")
+}
+
+@MainActor
 private func testGeneratedTicketsFollowTheIndianHousieThreeByNineLayout() {
         let ticket = HousieTicket.generate(using: .init(seed: 2026))
 
@@ -87,6 +108,38 @@ private func testGeneratedTicketsFollowTheIndianHousieThreeByNineLayout() {
     }
 
 @MainActor
+private func testManyGeneratedTicketsStayValid() {
+    for seed in 1...250 {
+        let ticket = HousieTicket.generate(using: .init(seed: UInt64(seed)))
+        let numbers = ticket.rows.flatMap { $0 }.compactMap(\.self)
+
+        check(ticket.rows.allSatisfy { $0.compactMap(\.self).count == 5 }, "seed \(seed) should put five numbers in each row")
+        check(numbers.count == 15, "seed \(seed) should contain 15 numbers")
+        check(Set(numbers).count == 15, "seed \(seed) should not repeat numbers")
+
+        for column in 0..<9 {
+            let values = ticket.rows.compactMap { $0[column] }
+            check(!values.isEmpty, "seed \(seed) should use every column")
+            check(values.allSatisfy(HousieTicket.validRange(forColumn: column).contains), "seed \(seed) column \(column) should stay in range")
+            check(values == values.sorted(), "seed \(seed) column \(column) should be sorted")
+        }
+    }
+}
+
+@MainActor
+private func testRandomTicketAndPrizeIdentifiers() {
+    let ticket = HousieTicket.generate()
+    check(ticket.numbers.count == 15, "random ticket should contain 15 numbers")
+
+    let zeroSeedTicket = HousieTicket.generate(using: .init(seed: 0))
+    check(zeroSeedTicket.numbers.count == 15, "zero seed should still generate a valid ticket")
+
+    for prize in HousiePrize.allCases {
+        check(prize.id == prize.rawValue, "prize identifier should match its title")
+    }
+}
+
+@MainActor
 private func testClaimsAreVerifiedOnlyAgainstNumbersAlreadyCalled() {
         let ticket = HousieTicket(rows: [
             [1, nil, 22, nil, 41, nil, 63, nil, 81],
@@ -97,6 +150,7 @@ private func testClaimsAreVerifiedOnlyAgainstNumbersAlreadyCalled() {
         check(ticket.isWinning(.earlyFive, calledNumbers: [1, 22, 41, 63, 81]), "early five should verify")
         check(ticket.isWinning(.topLine, calledNumbers: [1, 22, 41, 63, 81]), "top line should verify")
         check(!ticket.isWinning(.middleLine, calledNumbers: [1, 22, 41, 63, 81]), "middle line should fail")
+        check(ticket.isWinning(.bottomLine, calledNumbers: [8, 19, 39, 48, 69, 90]), "bottom line should verify")
         check(ticket.isWinning(.fullHouse, calledNumbers: Set(ticket.numbers)), "full house should verify")
     }
 
@@ -104,7 +158,10 @@ testNewGameBeginsWithAllNinetyBallsAvailable()
 testEveryBallIsCalledExactlyOnce()
 testPauseStopsAutomaticDrawsButKeepsNextBallAvailable()
 testResetRestoresTheOriginalCallerBoard()
+testConvenienceDrawsAndFinishedState()
 testGeneratedTicketsFollowTheIndianHousieThreeByNineLayout()
+testManyGeneratedTicketsStayValid()
+testRandomTicketAndPrizeIdentifiers()
 testClaimsAreVerifiedOnlyAgainstNumbersAlreadyCalled()
 
 if failures == 0 {
