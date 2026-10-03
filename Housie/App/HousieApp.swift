@@ -20,11 +20,8 @@ private struct RootView: View {
             CallerView(model: caller)
                 .tabItem { Label("Caller", systemImage: "circle.grid.3x3.fill") }
 
-            TicketView(caller: caller)
-                .tabItem { Label("Tickets", systemImage: "rectangle.grid.3x2.fill") }
-
             HowToPlayView()
-                .tabItem { Label("How to Play", systemImage: "book.pages.fill") }
+                .tabItem { Label("How It Works", systemImage: "questionmark.circle.fill") }
         }
     }
 }

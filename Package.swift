@@ -19,7 +19,8 @@ let package = Package(
         .executableTarget(
             name: "HousieCoreTests",
             dependencies: ["HousieCore"],
-            path: "HousieTests"
+            path: "HousieTests",
+            exclude: ["verify_caller_experience.sh"]
         )
     ]
 )

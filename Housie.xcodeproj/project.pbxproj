@@ -10,7 +10,6 @@
 		100000000000000000000002 /* CallerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000002 /* CallerViewModel.swift */; };
 		100000000000000000000003 /* HousieTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000003 /* HousieTheme.swift */; };
 		100000000000000000000004 /* CallerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000004 /* CallerView.swift */; };
-		100000000000000000000005 /* TicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000005 /* TicketView.swift */; };
 		100000000000000000000006 /* HowToPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000006 /* HowToPlayView.swift */; };
 		100000000000000000000007 /* HousieCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000007 /* HousieCore.swift */; };
 		100000000000000000000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000008 /* Assets.xcassets */; };
@@ -21,7 +20,6 @@
 		200000000000000000000002 /* CallerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallerViewModel.swift; sourceTree = "<group>"; };
 		200000000000000000000003 /* HousieTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousieTheme.swift; sourceTree = "<group>"; };
 		200000000000000000000004 /* CallerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallerView.swift; sourceTree = "<group>"; };
-		200000000000000000000005 /* TicketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketView.swift; sourceTree = "<group>"; };
 		200000000000000000000006 /* HowToPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlayView.swift; sourceTree = "<group>"; };
 		200000000000000000000007 /* HousieCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousieCore.swift; sourceTree = "<group>"; };
 		200000000000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,7 +75,6 @@
 			isa = PBXGroup;
 			children = (
 				400000000000000000000006 /* Caller */,
-				400000000000000000000007 /* Tickets */,
 				40000000000000000000000B /* Rules */,
 			);
 			path = Features;
@@ -87,12 +84,6 @@
 			isa = PBXGroup;
 			children = (200000000000000000000004 /* CallerView.swift */);
 			path = Caller;
-			sourceTree = "<group>";
-		};
-		400000000000000000000007 /* Tickets */ = {
-			isa = PBXGroup;
-			children = (200000000000000000000005 /* TicketView.swift */);
-			path = Tickets;
 			sourceTree = "<group>";
 		};
 		400000000000000000000008 /* HousieCore */ = {
@@ -181,7 +172,6 @@
 				100000000000000000000002 /* CallerViewModel.swift in Sources */,
 				100000000000000000000003 /* HousieTheme.swift in Sources */,
 				100000000000000000000004 /* CallerView.swift in Sources */,
-				100000000000000000000005 /* TicketView.swift in Sources */,
 				100000000000000000000006 /* HowToPlayView.swift in Sources */,
 				100000000000000000000007 /* HousieCore.swift in Sources */,
 			);

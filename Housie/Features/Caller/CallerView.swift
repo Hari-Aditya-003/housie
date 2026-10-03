@@ -1,3 +1,4 @@
+import AVKit
 import SwiftUI
 
 struct CallerView: View {
@@ -30,11 +31,7 @@ struct CallerView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Toggle("Speak numbers", isOn: $model.speechEnabled)
-                        Picker("Voice", selection: $model.announcementLanguage) {
-                            ForEach(AnnouncementLanguage.allCases) { language in
-                                Text(language.rawValue).tag(language)
-                            }
-                        }
+                        Label("Smooth English voice", systemImage: "waveform")
                         Section("Auto-call speed") {
                             Picker("Interval", selection: $model.callInterval) {
                                 Text("4 seconds").tag(4.0)
@@ -79,6 +76,8 @@ struct CallerView: View {
                 .font(.title3.weight(.semibold))
                 .foregroundStyle(HousieTheme.ink)
                 .contentTransition(.numericText())
+
+            calledHistory
 
             ProgressView(value: Double(model.game.calledNumbers.count), total: 90)
                 .tint(HousieTheme.saffron)
@@ -125,8 +124,29 @@ struct CallerView: View {
                 }
             }
             .font(.subheadline.weight(.semibold))
+
+            HStack(spacing: 10) {
+                Image(systemName: "airplayvideo")
+                    .font(.title3)
+                    .foregroundStyle(HousieTheme.magenta)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Cast to TV")
+                        .font(.subheadline.weight(.semibold))
+                    Text("Choose an AirPlay TV or Apple TV")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                AirPlayRoutePicker()
+                    .frame(width: 44, height: 44)
+                    .accessibilityLabel("Cast Housie to TV with AirPlay")
+            }
+            .padding(10)
+            .background(HousieTheme.magenta.opacity(0.07))
+            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
         .housieCard()
+        .sensoryFeedback(.impact(weight: .medium), trigger: model.game.currentNumber)
     }
 
     private var calledBall: some View {
@@ -151,26 +171,80 @@ struct CallerView: View {
         }
         .frame(width: 205, height: 205)
         .shadow(color: HousieTheme.saffron.opacity(0.24), radius: 18, y: 10)
-        .rotationEffect(.degrees(model.isDrawing ? 7 : 0))
-        .offset(x: model.isDrawing ? 9 : 0)
-        .scaleEffect(model.isDrawing ? 0.96 : 1)
-        .animation(
-            model.isDrawing
-                ? .easeInOut(duration: 0.08).repeatCount(8, autoreverses: true)
-                : .spring(response: 0.35, dampingFraction: 0.65),
-            value: model.isDrawing
-        )
+        .overlay {
+            Circle()
+                .stroke(HousieTheme.gold.opacity(model.isDrawing ? 0.75 : 0), lineWidth: 3)
+                .scaleEffect(model.isDrawing ? 1.16 : 0.95)
+        }
+        .phaseAnimator(
+            [0.0, -1.0, 0.9, -0.7, 0.55, 0.0],
+            trigger: model.isDrawing
+        ) { content, phase in
+            content
+                .offset(x: phase * 11)
+                .rotationEffect(.degrees(phase * 5))
+                .scaleEffect(model.isDrawing ? 0.97 : 1)
+        } animation: { _ in
+            .snappy(duration: 0.11, extraBounce: 0.18)
+        }
+        .animation(.easeOut(duration: 0.45), value: model.isDrawing)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(model.game.currentNumber.map { "Current number \($0)" } ?? "No number called")
+    }
+
+    private var calledHistory: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Called Numbers")
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(.secondary)
+                    .textCase(.uppercase)
+                Spacer()
+                if !model.game.calledNumbers.isEmpty {
+                    Text("Newest first")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
+                }
+            }
+
+            if model.game.calledNumbers.isEmpty {
+                Text("Called numbers will appear here")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, minHeight: 46, alignment: .leading)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: 8) {
+                        ForEach(model.game.calledNumbers.reversed(), id: \.self) { number in
+                            Text(String(number))
+                                .font(.system(size: 17, weight: .bold, design: .rounded))
+                                .monospacedDigit()
+                                .foregroundStyle(.white)
+                                .frame(width: 44, height: 44)
+                                .background(
+                                    number == model.game.currentNumber
+                                        ? HousieTheme.saffron
+                                        : HousieTheme.magenta,
+                                    in: Circle()
+                                )
+                                .transition(.scale.combined(with: .opacity))
+                                .accessibilityLabel("Called number \(number)")
+                        }
+                    }
+                    .padding(.vertical, 2)
+                }
+            }
+        }
+        .animation(.spring(response: 0.36, dampingFraction: 0.72), value: model.game.calledNumbers)
     }
 
     private var numberBoard: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("Caller Board")
+                    Text("All Numbers")
                         .font(.title2.bold())
-                    Text("Called numbers stay lit until the game ends")
+                    Text("Every number stays visible; called numbers light up")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -181,8 +255,8 @@ struct CallerView: View {
             }
 
             LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: 6), count: 10),
-                spacing: 7
+                columns: Array(repeating: GridItem(.flexible(minimum: 26), spacing: 4), count: 10),
+                spacing: 5
             ) {
                 ForEach(1...90, id: \.self) { number in
                     NumberCell(
@@ -232,14 +306,16 @@ private struct NumberCell: View {
 
     var body: some View {
         Text(String(number))
-            .font(.system(.callout, design: .rounded, weight: isCalled ? .bold : .medium))
+            .font(.system(size: 15, weight: isCalled ? .black : .semibold, design: .rounded))
             .monospacedDigit()
-            .foregroundStyle(isCalled ? Color.white : HousieTheme.ink.opacity(0.58))
+            .lineLimit(1)
+            .minimumScaleFactor(0.78)
+            .foregroundStyle(isCalled ? Color.white : HousieTheme.ink.opacity(0.78))
             .frame(maxWidth: .infinity)
             .aspectRatio(1, contentMode: .fit)
             .background {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(isCalled ? HousieTheme.magenta : Color.white.opacity(0.72))
+                    .fill(isCalled ? HousieTheme.magenta : Color.white.opacity(0.9))
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -248,6 +324,21 @@ private struct NumberCell: View {
             .shadow(color: isCurrent ? HousieTheme.gold.opacity(0.5) : .clear, radius: 5)
             .animation(.spring(response: 0.35, dampingFraction: 0.7), value: isCalled)
             .accessibilityLabel("Number \(number), \(isCalled ? "called" : "not called")")
+    }
+}
+
+private struct AirPlayRoutePicker: UIViewRepresentable {
+    func makeUIView(context: Context) -> AVRoutePickerView {
+        let picker = AVRoutePickerView()
+        picker.prioritizesVideoDevices = true
+        picker.tintColor = UIColor(HousieTheme.magenta)
+        picker.activeTintColor = UIColor(HousieTheme.saffron)
+        return picker
+    }
+
+    func updateUIView(_ picker: AVRoutePickerView, context: Context) {
+        picker.tintColor = UIColor(HousieTheme.magenta)
+        picker.activeTintColor = UIColor(HousieTheme.saffron)
     }
 }
 

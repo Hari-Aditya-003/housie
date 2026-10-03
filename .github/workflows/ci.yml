@@ -12,6 +12,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Verify Housie game rules
         run: swift run HousieCoreTests
+      - name: Verify simplified caller experience
+        run: HousieTests/verify_caller_experience.sh
 
   ios-build:
     runs-on: macos-15

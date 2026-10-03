@@ -5,13 +5,12 @@ A native SwiftUI Housie (Tambola) caller for iPhone and iPad, designed for India
 ## Features
 
 - Random, non-repeating calls from 1 to 90
-- Animated ball draw with spoken number announcements
-- English and Telugu system voices
+- Polished animated ball draw with smooth English announcements
 - Automatic calling with 4, 6, 8, or 10-second intervals
 - Pause, play, manual **Next Ball**, repeat, and reset controls
-- A live 1–90 board that keeps called numbers illuminated
-- Traditional random 3 × 9 tickets with 15 numbers
-- Claim checks for Early Five, Top/Middle/Bottom Line, and Full House
+- A complete 1–90 board plus a visible history of every called number
+- AirPlay control for Apple TV and compatible televisions
+- Compact in-app **How It Works** guide
 - Adaptive layouts for both iPhone and iPad
 - VoiceOver-friendly labels and Dynamic Type-friendly UI
 
@@ -46,8 +45,7 @@ Housie/
 ├── DesignSystem/        Colors and reusable card styling
 ├── Features/
 │   ├── Caller/          Ball caller and 1–90 board
-│   ├── Tickets/         Ticket generation and claim checks
-│   └── Rules/           How-to-play guide
+│   └── Rules/           Compact app guide
 ├── HousieCore/          Tested game and ticket rules
 └── Resources/           App icon and asset catalog
 ```

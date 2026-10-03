@@ -1,31 +1,17 @@
 import AVFoundation
 import Observation
 
-enum AnnouncementLanguage: String, CaseIterable, Identifiable {
-    case english = "English"
-    case telugu = "తెలుగు"
-
-    var id: String { rawValue }
-
-    var voiceCode: String {
-        switch self {
-        case .english: "en-IN"
-        case .telugu: "te-IN"
-        }
-    }
-}
-
 @MainActor
 @Observable
 final class CallerViewModel {
     private(set) var game = HousieGame()
     private(set) var isDrawing = false
     var speechEnabled = true
-    var announcementLanguage: AnnouncementLanguage = .english
     var callInterval = 6.0
 
-    private let speaker = AVSpeechSynthesizer()
-    private var automaticTask: Task<Void, Never>?
+    @ObservationIgnored private let speaker = AVSpeechSynthesizer()
+    @ObservationIgnored private var automaticTask: Task<Void, Never>?
+    @ObservationIgnored private lazy var englishVoice = Self.preferredEnglishVoice()
 
     var calledNumberSet: Set<Int> { Set(game.calledNumbers) }
 
@@ -87,11 +73,36 @@ final class CallerViewModel {
 
     private func announce(_ number: Int) {
         guard speechEnabled else { return }
+        try? AVAudioSession.sharedInstance().setCategory(
+            .playback,
+            mode: .spokenAudio,
+            options: [.duckOthers]
+        )
         speaker.stopSpeaking(at: .immediate)
         let utterance = AVSpeechUtterance(string: String(number))
-        utterance.voice = AVSpeechSynthesisVoice(language: announcementLanguage.voiceCode)
-        utterance.rate = 0.42
-        utterance.pitchMultiplier = 1.04
+        utterance.voice = englishVoice
+        utterance.rate = 0.46
+        utterance.pitchMultiplier = 1.0
+        utterance.volume = 1.0
+        utterance.preUtteranceDelay = 0.06
+        utterance.postUtteranceDelay = 0.08
         speaker.speak(utterance)
+    }
+
+    private static func preferredEnglishVoice() -> AVSpeechSynthesisVoice? {
+        let localePriority = ["en-IN", "en-GB", "en-US"]
+        let englishVoices = AVSpeechSynthesisVoice.speechVoices().filter {
+            $0.language.hasPrefix("en")
+        }
+
+        return englishVoices.sorted { first, second in
+            if first.quality.rawValue != second.quality.rawValue {
+                return first.quality.rawValue > second.quality.rawValue
+            }
+
+            let firstPriority = localePriority.firstIndex(of: first.language) ?? localePriority.count
+            let secondPriority = localePriority.firstIndex(of: second.language) ?? localePriority.count
+            return firstPriority < secondPriority
+        }.first ?? AVSpeechSynthesisVoice(language: "en-IN")
     }
 }
