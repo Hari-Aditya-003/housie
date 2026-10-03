@@ -13,7 +13,18 @@
 		100000000000000000000006 /* HowToPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000006 /* HowToPlayView.swift */; };
 		100000000000000000000007 /* HousieCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000007 /* HousieCore.swift */; };
 		100000000000000000000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000008 /* Assets.xcassets */; };
+		100000000000000000000009 /* HousieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000A /* HousieUITests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		900000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 500000000000000000000002 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 500000000000000000000001;
+			remoteInfo = Housie;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		200000000000000000000001 /* HousieApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousieApp.swift; sourceTree = "<group>"; };
@@ -24,10 +35,18 @@
 		200000000000000000000007 /* HousieCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousieCore.swift; sourceTree = "<group>"; };
 		200000000000000000000008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		200000000000000000000009 /* Housie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Housie.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		20000000000000000000000A /* HousieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousieUITests.swift; sourceTree = "<group>"; };
+		20000000000000000000000B /* HousieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HousieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		300000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		300000000000000000000002 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = ();
@@ -40,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				400000000000000000000002 /* Housie */,
+				40000000000000000000000C /* HousieUITests */,
 				400000000000000000000009 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,7 +114,10 @@
 		};
 		400000000000000000000009 /* Products */ = {
 			isa = PBXGroup;
-			children = (200000000000000000000009 /* Housie.app */);
+			children = (
+				200000000000000000000009 /* Housie.app */,
+				20000000000000000000000B /* HousieUITests.xctest */,
+			);
 			name = Products;
 			sourceTree = "<group>";
 		};
@@ -108,6 +131,12 @@
 			isa = PBXGroup;
 			children = (200000000000000000000006 /* HowToPlayView.swift */);
 			path = Rules;
+			sourceTree = "<group>";
+		};
+		40000000000000000000000C /* HousieUITests */ = {
+			isa = PBXGroup;
+			children = (20000000000000000000000A /* HousieUITests.swift */);
+			path = HousieUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +157,21 @@
 			productReference = 200000000000000000000009 /* Housie.app */;
 			productType = "com.apple.product-type.application";
 		};
+		500000000000000000000003 /* HousieUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 600000000000000000000003 /* Build configuration list for PBXNativeTarget "HousieUITests" */;
+			buildPhases = (
+				700000000000000000000003 /* Sources */,
+				300000000000000000000002 /* Frameworks */,
+				700000000000000000000004 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = (A00000000000000000000001 /* PBXTargetDependency */);
+			name = HousieUITests;
+			productName = HousieUITests;
+			productReference = 20000000000000000000000B /* HousieUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -139,6 +183,10 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					500000000000000000000001 = { CreatedOnToolsVersion = 16.0; };
+					500000000000000000000003 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 500000000000000000000001;
+					};
 				};
 			};
 			buildConfigurationList = 600000000000000000000001 /* Build configuration list for PBXProject "Housie" */;
@@ -150,7 +198,10 @@
 			productRefGroup = 400000000000000000000009 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
-			targets = (500000000000000000000001 /* Housie */);
+			targets = (
+				500000000000000000000001 /* Housie */,
+				500000000000000000000003 /* HousieUITests */,
+			);
 		};
 /* End PBXProject section */
 
@@ -159,6 +210,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (100000000000000000000008 /* Assets.xcassets in Resources */);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		700000000000000000000004 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
@@ -177,7 +234,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		700000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (100000000000000000000009 /* HousieUITests.swift in Sources */);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A00000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 500000000000000000000001 /* Housie */;
+			targetProxy = 900000000000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		800000000000000000000001 /* Debug */ = {
@@ -227,6 +298,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hariaditya.housie;
@@ -251,6 +324,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hariaditya.housie;
@@ -260,6 +335,40 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		800000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hariaditya.housieUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Housie;
+			};
+			name = Debug;
+		};
+		800000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hariaditya.housieUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Housie;
 			};
 			name = Release;
 		};
@@ -280,6 +389,15 @@
 			buildConfigurations = (
 				800000000000000000000003 /* Debug */,
 				800000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		600000000000000000000003 /* Build configuration list for PBXNativeTarget "HousieUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				800000000000000000000005 /* Debug */,
+				800000000000000000000006 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

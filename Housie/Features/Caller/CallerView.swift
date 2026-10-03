@@ -64,10 +64,12 @@ struct CallerView: View {
                 Label(statusTitle, systemImage: statusIcon)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(statusColor)
+                    .accessibilityIdentifier("callerStatus")
                 Spacer()
                 Text("\(model.game.calledNumbers.count) / 90")
                     .font(.subheadline.monospacedDigit().weight(.semibold))
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("calledCount")
             }
 
             calledBall
@@ -95,6 +97,7 @@ struct CallerView: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
                 .disabled(model.game.status == .finished)
+                .accessibilityIdentifier("playPauseButton")
 
                 Button {
                     Task { await model.drawNextBall() }
@@ -105,6 +108,7 @@ struct CallerView: View {
                 .buttonStyle(.bordered)
                 .controlSize(.large)
                 .disabled(model.isDrawing || model.game.status == .finished)
+                .accessibilityIdentifier("nextBallButton")
             }
 
             HStack {
@@ -114,6 +118,7 @@ struct CallerView: View {
                     Label("Repeat", systemImage: "speaker.wave.2.fill")
                 }
                 .disabled(model.game.currentNumber == nil)
+                .accessibilityIdentifier("repeatButton")
 
                 Spacer()
 
@@ -122,6 +127,7 @@ struct CallerView: View {
                 } label: {
                     Label("Reset", systemImage: "arrow.counterclockwise")
                 }
+                .accessibilityIdentifier("resetButton")
             }
             .font(.subheadline.weight(.semibold))
 
@@ -140,6 +146,7 @@ struct CallerView: View {
                 AirPlayRoutePicker()
                     .frame(width: 44, height: 44)
                     .accessibilityLabel("Cast Housie to TV with AirPlay")
+                    .accessibilityIdentifier("airPlayRoutePicker")
             }
             .padding(10)
             .background(HousieTheme.magenta.opacity(0.07))
@@ -190,6 +197,7 @@ struct CallerView: View {
         .animation(.easeOut(duration: 0.45), value: model.isDrawing)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(model.game.currentNumber.map { "Current number \($0)" } ?? "No number called")
+        .accessibilityIdentifier("currentNumberBall")
     }
 
     private var calledHistory: some View {
@@ -229,6 +237,7 @@ struct CallerView: View {
                                 )
                                 .transition(.scale.combined(with: .opacity))
                                 .accessibilityLabel("Called number \(number)")
+                                .accessibilityIdentifier("calledNumber.\(number)")
                         }
                     }
                     .padding(.vertical, 2)
@@ -236,6 +245,7 @@ struct CallerView: View {
             }
         }
         .animation(.spring(response: 0.36, dampingFraction: 0.72), value: model.game.calledNumbers)
+        .accessibilityIdentifier("calledHistory")
     }
 
     private var numberBoard: some View {
@@ -268,6 +278,7 @@ struct CallerView: View {
             }
         }
         .housieCard()
+        .accessibilityIdentifier("numberBoard")
     }
 
     private var statusTitle: String {
@@ -324,6 +335,7 @@ private struct NumberCell: View {
             .shadow(color: isCurrent ? HousieTheme.gold.opacity(0.5) : .clear, radius: 5)
             .animation(.spring(response: 0.35, dampingFraction: 0.7), value: isCalled)
             .accessibilityLabel("Number \(number), \(isCalled ? "called" : "not called")")
+            .accessibilityIdentifier("numberCell.\(number)")
     }
 }
 

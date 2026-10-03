@@ -13,17 +13,17 @@ fail() {
     exit 1
 }
 
-if rg -q 'TicketView\(' "$app_file"; then
+if grep -Eq 'TicketView\(' "$app_file"; then
     fail "The main app still exposes the Tickets tab."
 fi
 
-if rg -q 'AnnouncementLanguage|తెలుగు|te-IN' "$view_model_file" "$caller_file"; then
+if grep -Eq 'AnnouncementLanguage|తెలుగు|te-IN' "$view_model_file" "$caller_file"; then
     fail "The caller still exposes multiple languages instead of one English voice."
 fi
 
-rg -q 'AirPlayRoutePicker' "$caller_file" || fail "The caller has no AirPlay TV control."
-rg -q 'Text\("How It Works"\)' "$guide_file" || fail "The compact guide is not titled How It Works."
-rg -q 'ForEach\(1\.\.\.90' "$caller_file" || fail "The caller board does not render every number from 1 to 90."
-rg -q 'Text\(String\(number\)\)' "$caller_file" || fail "Board cells do not visibly render their number."
+grep -Eq 'AirPlayRoutePicker' "$caller_file" || fail "The caller has no AirPlay TV control."
+grep -Eq 'Text\("How It Works"\)' "$guide_file" || fail "The compact guide is not titled How It Works."
+grep -Eq 'ForEach\(1\.\.\.90' "$caller_file" || fail "The caller board does not render every number from 1 to 90."
+grep -Eq 'Text\(String\(number\)\)' "$caller_file" || fail "Board cells do not visibly render their number."
 
 print "PASS: Caller experience matches the simplified product requirements"

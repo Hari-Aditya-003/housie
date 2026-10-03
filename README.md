@@ -29,12 +29,24 @@ A native SwiftUI Housie (Tambola) caller for iPhone and iPad, designed for India
 
 Before installing on a physical device, choose your Apple Developer team under **Signing & Capabilities** and change the bundle identifier if needed.
 
-## Verify the game engine
+## Run the tests
 
-The shared Housie engine has a lightweight command-line verification harness:
+Verify the game rules and product requirements from Terminal:
 
 ```sh
 swift run HousieCoreTests
+HousieTests/verify_caller_experience.sh
+```
+
+Run the interaction tests on an iPad simulator from Xcode with **Product → Test**, or from Terminal:
+
+```sh
+xcodebuild \
+  -project Housie.xcodeproj \
+  -scheme Housie \
+  -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M5)' \
+  -only-testing:HousieUITests \
+  test
 ```
 
 ## Project structure
@@ -48,6 +60,7 @@ Housie/
 │   └── Rules/           Compact app guide
 ├── HousieCore/          Tested game and ticket rules
 └── Resources/           App icon and asset catalog
+HousieUITests/           Caller interaction and accessibility tests
 ```
 
 ## Privacy

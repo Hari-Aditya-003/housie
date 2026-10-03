@@ -28,3 +28,21 @@ jobs:
           -destination 'generic/platform=iOS Simulator'
           CODE_SIGNING_ALLOWED=NO
           build
+
+  ui-tests:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run iPad caller interaction tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          ipad_id="$(xcrun simctl list devices available | sed -nE '/iPad Pro 13-inch/ s/.*\(([0-9A-F-]{36})\).*/\1/p' | head -1)"
+          test -n "$ipad_id"
+          xcodebuild \
+            -project Housie.xcodeproj \
+            -scheme Housie \
+            -destination "platform=iOS Simulator,id=$ipad_id" \
+            -derivedDataPath build/DerivedData \
+            -only-testing:HousieUITests \
+            test

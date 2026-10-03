@@ -15,6 +15,7 @@ struct HowToPlayView: View {
                     Text("How It Works")
                         .font(.title2.bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityIdentifier("howItWorksTitle")
 
                     ForEach(steps, id: \.0) { step in
                         HStack(spacing: 12) {
@@ -26,6 +27,7 @@ struct HowToPlayView: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text(step.1)
                                     .font(.headline)
+                                    .accessibilityIdentifier("guideStep.\(step.1)")
                                 Text(step.2)
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
