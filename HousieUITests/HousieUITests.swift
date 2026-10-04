@@ -97,6 +97,18 @@ final class HousieUITests: XCTestCase {
         XCTAssertEqual(firstNumber.frame.width, firstNumber.frame.height, accuracy: 1.5)
     }
 
+    func testHousieKaKingBrandFitsTheScreen() {
+        let title = app.staticTexts["housieBrandTitle"]
+        XCTAssertTrue(title.waitForExistence(timeout: 2))
+        XCTAssertEqual(title.label, "Housie Ka King")
+        XCTAssertTrue(app.descendants(matching: .any)["housieBackdrop"].exists)
+        XCTAssertLessThanOrEqual(title.frame.maxX, app.frame.maxX + 1)
+
+        XCUIDevice.shared.orientation = .landscapeLeft
+        XCTAssertTrue(title.waitForExistence(timeout: 2))
+        XCTAssertLessThanOrEqual(title.frame.maxX, app.frame.maxX + 1)
+    }
+
     func testCallerAdaptsToLandscape() {
         XCUIDevice.shared.orientation = .landscapeLeft
 
