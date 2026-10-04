@@ -5,8 +5,13 @@ final class HousieUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
         app = XCUIApplication()
         app.launch()
+    }
+
+    override func tearDownWithError() throws {
+        XCUIDevice.shared.orientation = .portrait
     }
 
     func testCallerShowsCompleteBoardAndTVControl() {
@@ -80,6 +85,28 @@ final class HousieUITests: XCTestCase {
         for step in ["Start", "Listen", "Follow", "Share"] {
             XCTAssertTrue(app.staticTexts["guideStep.\(step)"].exists)
         }
+    }
+
+    func testAdaptiveBoardUsesCircularCellsAndCompactFooter() {
+        let castControls = app.descendants(matching: .any)["compactCastControls"]
+        XCTAssertTrue(scrollUpUntilVisible(castControls))
+        XCTAssertTrue(app.staticTexts["copyrightHari"].exists)
+
+        let firstNumber = app.descendants(matching: .any)["numberCell.1"]
+        XCTAssertTrue(scrollUpUntilVisible(firstNumber))
+        XCTAssertEqual(firstNumber.frame.width, firstNumber.frame.height, accuracy: 1.5)
+    }
+
+    func testCallerAdaptsToLandscape() {
+        XCUIDevice.shared.orientation = .landscapeLeft
+
+        let board = app.descendants(matching: .any)["numberBoard"]
+        XCTAssertTrue(scrollUpUntilVisible(board))
+
+        let firstNumber = app.descendants(matching: .any)["numberCell.1"]
+        XCTAssertTrue(firstNumber.waitForExistence(timeout: 2))
+        XCTAssertEqual(firstNumber.frame.width, firstNumber.frame.height, accuracy: 1.5)
+        XCTAssertTrue(app.staticTexts["copyrightHari"].exists)
     }
 
     private func tab(named name: String) -> XCUIElement {

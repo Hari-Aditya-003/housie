@@ -10,6 +10,8 @@ caller_file="$project_root/Housie/Features/Caller/CallerView.swift"
 view_model_file="$project_root/Housie/App/CallerViewModel.swift"
 info_file="$project_root/Housie/Resources/Info.plist"
 receiver_file="$project_root/GoogleCastReceiver/app.js"
+receiver_html="$project_root/GoogleCastReceiver/index.html"
+receiver_css="$project_root/GoogleCastReceiver/styles.css"
 
 fail() {
     print -u2 "FAIL: $1"
@@ -35,5 +37,9 @@ grep -Eq 'NSLocalNetworkUsageDescription' "$info_file" || fail "The Cast local-n
 [[ -f "$receiver_file" ]] || fail "The Google TV web receiver is missing."
 grep -Eq 'urn:x-cast:com\.housie\.board' "$receiver_file" || fail "The TV receiver does not listen to the Housie channel."
 grep -Eq 'calledNumbers' "$receiver_file" || fail "The TV receiver does not render called numbers."
+
+grep -Fq '© Hari' "$receiver_html" || fail "The TV receiver is missing the Hari copyright footer."
+number_rule="$(sed -n '/^\.number {/,/^}/p' "$receiver_css")"
+grep -Fq 'border-radius: 50%' <<< "$number_rule" || fail "TV board numbers are not circular."
 
 print "PASS: AirPlay and Google Cast implementation files are present"
