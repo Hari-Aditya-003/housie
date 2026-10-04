@@ -5,7 +5,7 @@ struct HowToPlayView: View {
         ("play.fill", "Start", "Tap Play for automatic calls, or Next Ball to call one number."),
         ("speaker.wave.2.fill", "Listen", "The app speaks each number in a smooth English voice."),
         ("square.grid.3x3.fill", "Follow", "Called numbers light up and remain visible on the 1–90 board."),
-        ("airplayvideo", "Share", "Use Cast to TV for AirPlay, or pause and reset whenever needed.")
+        ("airplayvideo", "Share", "Use AirPlay for Apple TV or Google Cast for Android and Google TV.")
     ]
 
     var body: some View {

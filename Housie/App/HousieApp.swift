@@ -2,6 +2,7 @@ import SwiftUI
 
 @main
 struct HousieApp: App {
+    @UIApplicationDelegateAdaptor(CastAppDelegate.self) private var appDelegate
     @State private var caller = CallerViewModel()
 
     var body: some Scene {

@@ -20,7 +20,10 @@ let package = Package(
             name: "HousieCoreTests",
             dependencies: ["HousieCore"],
             path: "HousieTests",
-            exclude: ["verify_caller_experience.sh"]
+            exclude: [
+                "verify_caller_experience.sh",
+                "verify_tv_casting.sh"
+            ]
         )
     ]
 )

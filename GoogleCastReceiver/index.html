@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Housie TV Board</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="layout">
+    <section class="caller-card" aria-live="polite">
+      <p class="eyebrow">Housie Caller</p>
+      <div id="current-number" class="ball">?</div>
+      <h1 id="status">Ready to begin</h1>
+      <p id="progress">0 of 90 called</p>
+    </section>
+
+    <section class="board-card">
+      <header>
+        <div>
+          <p class="eyebrow">Live board</p>
+          <h2>Numbers 1–90</h2>
+        </div>
+        <p>Called numbers stay lit</p>
+      </header>
+      <div id="number-board" class="number-board" aria-label="Housie numbers"></div>
+    </section>
+  </main>
+
+  <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

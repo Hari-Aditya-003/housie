@@ -10,10 +10,17 @@ final class CallerViewModel {
     var callInterval = 6.0
 
     @ObservationIgnored private let speaker = AVSpeechSynthesizer()
+    @ObservationIgnored private let castManager: GoogleCastManager
     @ObservationIgnored private var automaticTask: Task<Void, Never>?
     @ObservationIgnored private lazy var englishVoice = Self.preferredEnglishVoice()
 
     var calledNumberSet: Set<Int> { Set(game.calledNumbers) }
+
+    init(castManager: GoogleCastManager? = nil) {
+        let manager = castManager ?? .shared
+        self.castManager = manager
+        manager.publish(game: game)
+    }
 
     func togglePlayPause() {
         if game.status == .running {
@@ -21,6 +28,7 @@ final class CallerViewModel {
         } else {
             game.play()
             startAutomaticCalling()
+            publishCastState()
         }
     }
 
@@ -28,6 +36,7 @@ final class CallerViewModel {
         game.pause()
         automaticTask?.cancel()
         automaticTask = nil
+        publishCastState()
     }
 
     func drawNextBall() async {
@@ -42,6 +51,7 @@ final class CallerViewModel {
 
         if let number = game.drawNext() {
             announce(number)
+            publishCastState()
         }
         isDrawing = false
     }
@@ -52,6 +62,7 @@ final class CallerViewModel {
         speaker.stopSpeaking(at: .immediate)
         isDrawing = false
         game.reset()
+        publishCastState()
     }
 
     func replayCurrentNumber() {
@@ -87,6 +98,10 @@ final class CallerViewModel {
         utterance.preUtteranceDelay = 0.06
         utterance.postUtteranceDelay = 0.08
         speaker.speak(utterance)
+    }
+
+    private func publishCastState() {
+        castManager.publish(game: game)
     }
 
     private static func preferredEnglishVoice() -> AVSpeechSynthesisVoice? {

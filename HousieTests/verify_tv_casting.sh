@@ -23,6 +23,7 @@ grep -Eq "pod ['\"]google-cast-sdk['\"]" "$podfile" || fail "The Podfile does no
 grep -Eq 'GCKCastContext' "$cast_file" || fail "The Google Cast context is not configured."
 grep -Eq 'GCKUICastButton' "$cast_file" || fail "The official Google Cast device button is missing."
 grep -Eq 'urn:x-cast:com\.housie\.board' "$cast_file" || fail "The Housie board message channel is missing."
+grep -Eq 'didChangeWritableState' "$cast_file" || fail "Cast state is not retried when the TV channel becomes writable."
 grep -Eq '@UIApplicationDelegateAdaptor' "$app_file" || fail "Google Cast is not initialized at app launch."
 grep -Eq 'GoogleCastButton' "$caller_file" || fail "The caller screen does not expose Google Cast."
 grep -Eq 'publish.*Cast|castManager\.publish' "$view_model_file" || fail "Caller state is not synchronized to the TV."

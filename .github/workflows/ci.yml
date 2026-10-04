@@ -14,15 +14,21 @@ jobs:
         run: swift run HousieCoreTests
       - name: Verify simplified caller experience
         run: HousieTests/verify_caller_experience.sh
+      - name: Verify Apple and Android TV casting contracts
+        run: HousieTests/verify_tv_casting.sh
 
   ios-build:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+      - name: Install iOS dependencies
+        run: |
+          if ! command -v pod >/dev/null; then sudo gem install cocoapods -v 1.16.2 --no-document; fi
+          pod install
       - name: Build for iOS Simulator
         run: >-
           xcodebuild
-          -project Housie.xcodeproj
+          -workspace Housie.xcworkspace
           -scheme Housie
           -sdk iphonesimulator
           -destination 'generic/platform=iOS Simulator'
@@ -33,6 +39,10 @@ jobs:
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
+      - name: Install iOS dependencies
+        run: |
+          if ! command -v pod >/dev/null; then sudo gem install cocoapods -v 1.16.2 --no-document; fi
+          pod install
       - name: Run iPad caller interaction tests
         shell: bash
         run: |
@@ -40,7 +50,7 @@ jobs:
           ipad_id="$(xcrun simctl list devices available | sed -nE '/iPad Pro 13-inch/ s/.*\(([0-9A-F-]{36})\).*/\1/p' | head -1)"
           test -n "$ipad_id"
           xcodebuild \
-            -project Housie.xcodeproj \
+            -workspace Housie.xcworkspace \
             -scheme Housie \
             -destination "platform=iOS Simulator,id=$ipad_id" \
             -derivedDataPath build/DerivedData \

@@ -24,6 +24,7 @@ struct CallerView: View {
                         .padding(16)
                     }
                 }
+                .accessibilityIdentifier("callerScrollView")
                 .background(HousieTheme.background.ignoresSafeArea())
             }
             .navigationTitle("Housie")
@@ -131,22 +132,31 @@ struct CallerView: View {
             }
             .font(.subheadline.weight(.semibold))
 
-            HStack(spacing: 10) {
-                Image(systemName: "airplayvideo")
-                    .font(.title3)
-                    .foregroundStyle(HousieTheme.magenta)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Cast to TV")
-                        .font(.subheadline.weight(.semibold))
-                    Text("Choose an AirPlay TV or Apple TV")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Cast to TV")
+                    .font(.subheadline.weight(.semibold))
+
+                TVCastRow(
+                    icon: "airplayvideo",
+                    title: "Apple TV / AirPlay",
+                    subtitle: "Mirror Housie to an AirPlay television"
+                ) {
+                    AirPlayRoutePicker()
+                        .frame(width: 44, height: 44)
+                        .accessibilityLabel("Cast Housie to TV with AirPlay")
+                        .accessibilityIdentifier("airPlayRoutePicker")
                 }
-                Spacer()
-                AirPlayRoutePicker()
-                    .frame(width: 44, height: 44)
-                    .accessibilityLabel("Cast Housie to TV with AirPlay")
-                    .accessibilityIdentifier("airPlayRoutePicker")
+
+                Divider()
+
+                TVCastRow(
+                    icon: "tv",
+                    title: "Android / Google TV",
+                    subtitle: "Send the live board with Google Cast"
+                ) {
+                    GoogleCastButton()
+                        .frame(width: 44, height: 44)
+                }
             }
             .padding(10)
             .background(HousieTheme.magenta.opacity(0.07))
@@ -278,6 +288,8 @@ struct CallerView: View {
             }
         }
         .housieCard()
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Housie number board, numbers 1 through 90")
         .accessibilityIdentifier("numberBoard")
     }
 
@@ -307,6 +319,31 @@ struct CallerView: View {
         if model.isDrawing { return "Shaking the ball…" }
         if let current = model.game.currentNumber { return "Number \(current)" }
         return "Tap Play or Next Ball"
+    }
+}
+
+private struct TVCastRow<Accessory: View>: View {
+    let icon: String
+    let title: String
+    let subtitle: String
+    @ViewBuilder let accessory: () -> Accessory
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.title3)
+                .foregroundStyle(HousieTheme.magenta)
+                .frame(width: 24)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+            accessory()
+        }
     }
 }
 

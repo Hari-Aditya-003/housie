@@ -1,7 +1,8 @@
 // !$*UTF8*$!
 {
 	archiveVersion = 1;
-	classes = {};
+	classes = {
+	};
 	objectVersion = 56;
 	objects = {
 
@@ -14,6 +15,8 @@
 		100000000000000000000007 /* HousieCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000007 /* HousieCore.swift */; };
 		100000000000000000000008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000008 /* Assets.xcassets */; };
 		100000000000000000000009 /* HousieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000A /* HousieUITests.swift */; };
+		10000000000000000000000A /* GoogleCastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000C /* GoogleCastManager.swift */; };
+		FD30577DC164F0F5F50298D5 /* Pods_Housie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D616BAF531BA4604F8A80D /* Pods_Housie.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,19 +40,27 @@
 		200000000000000000000009 /* Housie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Housie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20000000000000000000000A /* HousieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HousieUITests.swift; sourceTree = "<group>"; };
 		20000000000000000000000B /* HousieUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HousieUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		20000000000000000000000C /* GoogleCastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCastManager.swift; sourceTree = "<group>"; };
+		20000000000000000000000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B169DED146B515234405C68 /* Pods-Housie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Housie.release.xcconfig"; path = "Target Support Files/Pods-Housie/Pods-Housie.release.xcconfig"; sourceTree = "<group>"; };
+		989738660A4304A9BFB52925 /* Pods-Housie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Housie.debug.xcconfig"; path = "Target Support Files/Pods-Housie/Pods-Housie.debug.xcconfig"; sourceTree = "<group>"; };
+		B0D616BAF531BA4604F8A80D /* Pods_Housie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Housie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		300000000000000000000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
-			files = ();
+			files = (
+				FD30577DC164F0F5F50298D5 /* Pods_Housie.framework in Frameworks */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		300000000000000000000002 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
-			files = ();
+			files = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -61,6 +72,8 @@
 				400000000000000000000002 /* Housie */,
 				40000000000000000000000C /* HousieUITests */,
 				400000000000000000000009 /* Products */,
+				DE96404FACDA9615BB8ABD34 /* Pods */,
+				C20919546A3743448C15EEA2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				400000000000000000000003 /* App */,
+				40000000000000000000000D /* Casting */,
 				400000000000000000000004 /* DesignSystem */,
 				400000000000000000000005 /* Features */,
 				400000000000000000000008 /* HousieCore */,
@@ -87,7 +101,9 @@
 		};
 		400000000000000000000004 /* DesignSystem */ = {
 			isa = PBXGroup;
-			children = (200000000000000000000003 /* HousieTheme.swift */);
+			children = (
+				200000000000000000000003 /* HousieTheme.swift */,
+			);
 			path = DesignSystem;
 			sourceTree = "<group>";
 		};
@@ -102,13 +118,17 @@
 		};
 		400000000000000000000006 /* Caller */ = {
 			isa = PBXGroup;
-			children = (200000000000000000000004 /* CallerView.swift */);
+			children = (
+				200000000000000000000004 /* CallerView.swift */,
+			);
 			path = Caller;
 			sourceTree = "<group>";
 		};
 		400000000000000000000008 /* HousieCore */ = {
 			isa = PBXGroup;
-			children = (200000000000000000000007 /* HousieCore.swift */);
+			children = (
+				200000000000000000000007 /* HousieCore.swift */,
+			);
 			path = HousieCore;
 			sourceTree = "<group>";
 		};
@@ -123,20 +143,53 @@
 		};
 		40000000000000000000000A /* Resources */ = {
 			isa = PBXGroup;
-			children = (200000000000000000000008 /* Assets.xcassets */);
+			children = (
+				200000000000000000000008 /* Assets.xcassets */,
+				20000000000000000000000D /* Info.plist */,
+			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
 		40000000000000000000000B /* Rules */ = {
 			isa = PBXGroup;
-			children = (200000000000000000000006 /* HowToPlayView.swift */);
+			children = (
+				200000000000000000000006 /* HowToPlayView.swift */,
+			);
 			path = Rules;
 			sourceTree = "<group>";
 		};
 		40000000000000000000000C /* HousieUITests */ = {
 			isa = PBXGroup;
-			children = (20000000000000000000000A /* HousieUITests.swift */);
+			children = (
+				20000000000000000000000A /* HousieUITests.swift */,
+			);
 			path = HousieUITests;
+			sourceTree = "<group>";
+		};
+		40000000000000000000000D /* Casting */ = {
+			isa = PBXGroup;
+			children = (
+				20000000000000000000000C /* GoogleCastManager.swift */,
+			);
+			path = Casting;
+			sourceTree = "<group>";
+		};
+		C20919546A3743448C15EEA2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B0D616BAF531BA4604F8A80D /* Pods_Housie.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE96404FACDA9615BB8ABD34 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				989738660A4304A9BFB52925 /* Pods-Housie.debug.xcconfig */,
+				8B169DED146B515234405C68 /* Pods-Housie.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,12 +199,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 600000000000000000000002 /* Build configuration list for PBXNativeTarget "Housie" */;
 			buildPhases = (
+				47BA2AE2035A8C723640E1BA /* [CP] Check Pods Manifest.lock */,
 				700000000000000000000001 /* Sources */,
 				300000000000000000000001 /* Frameworks */,
 				700000000000000000000002 /* Resources */,
+				DD758ADAE2ED624457C39CC2 /* [CP] Embed Pods Frameworks */,
+				B0DF537A3A98CA13D96A3175 /* [CP] Copy Pods Resources */,
 			);
-			buildRules = ();
-			dependencies = ();
+			buildRules = (
+			);
+			dependencies = (
+			);
 			name = Housie;
 			productName = Housie;
 			productReference = 200000000000000000000009 /* Housie.app */;
@@ -165,8 +223,11 @@
 				300000000000000000000002 /* Frameworks */,
 				700000000000000000000004 /* Resources */,
 			);
-			buildRules = ();
-			dependencies = (A00000000000000000000001 /* PBXTargetDependency */);
+			buildRules = (
+			);
+			dependencies = (
+				A00000000000000000000001 /* PBXTargetDependency */,
+			);
 			name = HousieUITests;
 			productName = HousieUITests;
 			productReference = 20000000000000000000000B /* HousieUITests.xctest */;
@@ -182,7 +243,9 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					500000000000000000000001 = { CreatedOnToolsVersion = 16.0; };
+					500000000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					500000000000000000000003 = {
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = 500000000000000000000001;
@@ -193,7 +256,10 @@
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
-			knownRegions = (en, Base);
+			knownRegions = (
+				en,
+				Base,
+			);
 			mainGroup = 400000000000000000000001;
 			productRefGroup = 400000000000000000000009 /* Products */;
 			projectDirPath = "";
@@ -209,16 +275,78 @@
 		700000000000000000000002 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (100000000000000000000008 /* Assets.xcassets in Resources */);
+			files = (
+				100000000000000000000008 /* Assets.xcassets in Resources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		700000000000000000000004 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = ();
+			files = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		47BA2AE2035A8C723640E1BA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Housie-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B0DF537A3A98CA13D96A3175 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Housie/Pods-Housie-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Housie/Pods-Housie-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Housie/Pods-Housie-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DD758ADAE2ED624457C39CC2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Housie/Pods-Housie-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Housie/Pods-Housie-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Housie/Pods-Housie-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		700000000000000000000001 /* Sources */ = {
@@ -231,13 +359,16 @@
 				100000000000000000000004 /* CallerView.swift in Sources */,
 				100000000000000000000006 /* HowToPlayView.swift in Sources */,
 				100000000000000000000007 /* HousieCore.swift in Sources */,
+				10000000000000000000000A /* GoogleCastManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		700000000000000000000003 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = (100000000000000000000009 /* HousieUITests.swift in Sources */);
+			files = (
+				100000000000000000000009 /* HousieUITests.swift in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
@@ -288,18 +419,15 @@
 		};
 		800000000000000000000003 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 989738660A4304A9BFB52925 /* Pods-Housie.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Housie;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				GENERATE_INFOPLIST_FILE = NO;
+				GOOGLE_CAST_RECEIVER_APP_ID = YOUR_GOOGLE_CAST_RECEIVER_APP_ID;
+				INFOPLIST_FILE = Housie/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hariaditya.housie;
@@ -314,18 +442,15 @@
 		};
 		800000000000000000000004 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B169DED146B515234405C68 /* Pods-Housie.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Housie;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				GENERATE_INFOPLIST_FILE = NO;
+				GOOGLE_CAST_RECEIVER_APP_ID = YOUR_GOOGLE_CAST_RECEIVER_APP_ID;
+				INFOPLIST_FILE = Housie/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hariaditya.housie;
