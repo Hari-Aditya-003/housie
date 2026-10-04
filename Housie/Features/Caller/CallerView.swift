@@ -14,9 +14,11 @@ struct CallerView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .accessibilityIdentifier("callerScrollView")
-                .background(HousieTheme.background.ignoresSafeArea())
+                .background(HousieBackdrop())
             }
-            .navigationTitle("Housie")
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
@@ -57,6 +59,8 @@ struct CallerView: View {
         let ballDiameter: CGFloat = hasShortHeight ? 132 : (usesSplitLayout ? 174 : 168)
 
         VStack(spacing: 12) {
+            brandHeader(compact: hasShortHeight)
+
             if usesSplitLayout {
                 HStack(alignment: .top, spacing: 18) {
                     callerPanel(ballDiameter: ballDiameter, compact: hasShortHeight)
@@ -76,6 +80,26 @@ struct CallerView: View {
         .padding(.horizontal, outerPadding)
         .padding(.top, outerPadding)
         .padding(.bottom, 10)
+    }
+
+    private func brandHeader(compact: Bool) -> some View {
+        HStack(spacing: compact ? 7 : 10) {
+            Image(systemName: "sparkles")
+                .foregroundStyle(HousieTheme.gold)
+
+            Text("Housie Ka King")
+                .font(.system(size: compact ? 23 : 30, weight: .black, design: .rounded))
+                .foregroundStyle(HousieTheme.titleGradient)
+                .shadow(color: HousieTheme.magenta.opacity(0.9), radius: 1, x: 0, y: 2)
+                .lineLimit(1)
+                .minimumScaleFactor(0.66)
+                .accessibilityIdentifier("housieBrandTitle")
+
+            Image(systemName: "crown.fill")
+                .foregroundStyle(HousieTheme.gold)
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .contain)
     }
 
     private func callerPanel(ballDiameter: CGFloat, compact: Bool) -> some View {
@@ -222,9 +246,9 @@ struct CallerView: View {
         .background(.regularMaterial, in: Capsule())
         .overlay {
             Capsule()
-                .stroke(Color.white.opacity(0.9), lineWidth: 1)
+                .stroke(HousieTheme.gold.opacity(0.52), lineWidth: 1)
         }
-        .shadow(color: HousieTheme.royal.opacity(0.10), radius: 8, y: 4)
+        .shadow(color: Color.black.opacity(0.24), radius: 8, y: 4)
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Cast Housie to a television")
         .accessibilityIdentifier("compactCastControls")

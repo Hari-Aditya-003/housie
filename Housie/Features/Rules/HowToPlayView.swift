@@ -45,9 +45,10 @@ struct HowToPlayView: View {
                 .frame(maxWidth: 540)
                 .padding(16)
             }
-            .background(HousieTheme.background.ignoresSafeArea())
+            .background(HousieBackdrop())
             .navigationTitle("How It Works")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
         }
     }
 }
