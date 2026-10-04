@@ -38,6 +38,9 @@ struct HowToPlayView: View {
                         .background(.thinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                     }
+
+                    HousieCopyright()
+                        .padding(.top, 4)
                 }
                 .frame(maxWidth: 540)
                 .padding(16)

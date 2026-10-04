@@ -9,20 +9,9 @@ struct CallerView: View {
         NavigationStack {
             GeometryReader { proxy in
                 ScrollView {
-                    if proxy.size.width >= 760 {
-                        HStack(alignment: .top, spacing: 22) {
-                            callerPanel
-                                .frame(width: min(350, proxy.size.width * 0.34))
-                            numberBoard
-                        }
-                        .padding(24)
-                    } else {
-                        VStack(spacing: 18) {
-                            callerPanel
-                            numberBoard
-                        }
-                        .padding(16)
-                    }
+                    adaptiveContent(in: proxy.size)
+                        .frame(maxWidth: 1_180)
+                        .frame(maxWidth: .infinity)
                 }
                 .accessibilityIdentifier("callerScrollView")
                 .background(HousieTheme.background.ignoresSafeArea())
@@ -59,8 +48,38 @@ struct CallerView: View {
         }
     }
 
-    private var callerPanel: some View {
-        VStack(spacing: 18) {
+    @ViewBuilder
+    private func adaptiveContent(in size: CGSize) -> some View {
+        let usesSplitLayout = size.width >= 700
+        let hasShortHeight = size.height < 560
+        let outerPadding: CGFloat = usesSplitLayout ? 22 : 14
+        let panelWidth = min(340, size.width * 0.36)
+        let ballDiameter: CGFloat = hasShortHeight ? 132 : (usesSplitLayout ? 174 : 168)
+
+        VStack(spacing: 12) {
+            if usesSplitLayout {
+                HStack(alignment: .top, spacing: 18) {
+                    callerPanel(ballDiameter: ballDiameter, compact: hasShortHeight)
+                        .frame(width: panelWidth)
+                    numberBoard
+                }
+            } else {
+                VStack(spacing: 16) {
+                    callerPanel(ballDiameter: ballDiameter, compact: false)
+                    numberBoard
+                }
+            }
+
+            compactCastControls
+            HousieCopyright()
+        }
+        .padding(.horizontal, outerPadding)
+        .padding(.top, outerPadding)
+        .padding(.bottom, 10)
+    }
+
+    private func callerPanel(ballDiameter: CGFloat, compact: Bool) -> some View {
+        VStack(spacing: compact ? 12 : 16) {
             HStack {
                 Label(statusTitle, systemImage: statusIcon)
                     .font(.subheadline.weight(.semibold))
@@ -73,7 +92,7 @@ struct CallerView: View {
                     .accessibilityIdentifier("calledCount")
             }
 
-            calledBall
+            calledBall(diameter: ballDiameter)
 
             Text(ballCaption)
                 .font(.title3.weight(.semibold))
@@ -132,41 +151,12 @@ struct CallerView: View {
             }
             .font(.subheadline.weight(.semibold))
 
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Cast to TV")
-                    .font(.subheadline.weight(.semibold))
-
-                TVCastRow(
-                    icon: "airplayvideo",
-                    title: "Apple TV / AirPlay",
-                    subtitle: "Mirror Housie to an AirPlay television"
-                ) {
-                    AirPlayRoutePicker()
-                        .frame(width: 44, height: 44)
-                        .accessibilityLabel("Cast Housie to TV with AirPlay")
-                        .accessibilityIdentifier("airPlayRoutePicker")
-                }
-
-                Divider()
-
-                TVCastRow(
-                    icon: "tv",
-                    title: "Android / Google TV",
-                    subtitle: "Send the live board with Google Cast"
-                ) {
-                    GoogleCastButton()
-                        .frame(width: 44, height: 44)
-                }
-            }
-            .padding(10)
-            .background(HousieTheme.magenta.opacity(0.07))
-            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         }
         .housieCard()
         .sensoryFeedback(.impact(weight: .medium), trigger: model.game.currentNumber)
     }
 
-    private var calledBall: some View {
+    private func calledBall(diameter: CGFloat) -> some View {
         ZStack {
             Circle()
                 .fill(
@@ -186,7 +176,7 @@ struct CallerView: View {
                 .foregroundStyle(HousieTheme.magenta)
                 .contentTransition(.numericText())
         }
-        .frame(width: 205, height: 205)
+        .frame(width: diameter, height: diameter)
         .shadow(color: HousieTheme.saffron.opacity(0.24), radius: 18, y: 10)
         .overlay {
             Circle()
@@ -208,6 +198,36 @@ struct CallerView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(model.game.currentNumber.map { "Current number \($0)" } ?? "No number called")
         .accessibilityIdentifier("currentNumberBall")
+    }
+
+    private var compactCastControls: some View {
+        HStack(spacing: 8) {
+            Label("TV", systemImage: "tv.fill")
+                .font(.caption.weight(.bold))
+                .foregroundStyle(HousieTheme.royal)
+
+            Divider()
+                .frame(height: 22)
+
+            AirPlayRoutePicker()
+                .frame(width: 30, height: 30)
+                .accessibilityLabel("Cast Housie to TV with AirPlay")
+                .accessibilityIdentifier("airPlayRoutePicker")
+
+            GoogleCastButton()
+                .frame(width: 30, height: 30)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(.regularMaterial, in: Capsule())
+        .overlay {
+            Capsule()
+                .stroke(Color.white.opacity(0.9), lineWidth: 1)
+        }
+        .shadow(color: HousieTheme.royal.opacity(0.10), radius: 8, y: 4)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Cast Housie to a television")
+        .accessibilityIdentifier("compactCastControls")
     }
 
     private var calledHistory: some View {
@@ -322,57 +342,59 @@ struct CallerView: View {
     }
 }
 
-private struct TVCastRow<Accessory: View>: View {
-    let icon: String
-    let title: String
-    let subtitle: String
-    @ViewBuilder let accessory: () -> Accessory
-
-    var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: icon)
-                .font(.title3)
-                .foregroundStyle(HousieTheme.magenta)
-                .frame(width: 24)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.subheadline.weight(.semibold))
-                Text(subtitle)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-            Spacer()
-            accessory()
-        }
-    }
-}
-
 private struct NumberCell: View {
     let number: Int
     let isCalled: Bool
     let isCurrent: Bool
 
     var body: some View {
-        Text(String(number))
-            .font(.system(size: 15, weight: isCalled ? .black : .semibold, design: .rounded))
-            .monospacedDigit()
-            .lineLimit(1)
-            .minimumScaleFactor(0.78)
-            .foregroundStyle(isCalled ? Color.white : HousieTheme.ink.opacity(0.78))
-            .frame(maxWidth: .infinity)
-            .aspectRatio(1, contentMode: .fit)
-            .background {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(isCalled ? HousieTheme.magenta : Color.white.opacity(0.9))
+        GeometryReader { proxy in
+            let diameter = min(proxy.size.width, proxy.size.height)
+
+            ZStack {
+                Circle()
+                    .fill(cellColor)
+
+                Circle()
+                    .strokeBorder(
+                        isCurrent ? HousieTheme.gold : Color.white.opacity(isCalled ? 0.42 : 0.95),
+                        lineWidth: isCurrent ? max(2.5, diameter * 0.08) : 1
+                    )
+
+                Text(String(number))
+                    .font(
+                        .system(
+                            size: min(30, max(12, diameter * 0.42)),
+                            weight: isCalled ? .black : .bold,
+                            design: .rounded
+                        )
+                    )
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
+                    .foregroundStyle(isCalled ? Color.white : HousieTheme.ink.opacity(0.82))
+                    .padding(diameter * 0.14)
             }
-            .overlay {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(isCurrent ? HousieTheme.gold : Color.clear, lineWidth: 3)
-            }
-            .shadow(color: isCurrent ? HousieTheme.gold.opacity(0.5) : .clear, radius: 5)
-            .animation(.spring(response: 0.35, dampingFraction: 0.7), value: isCalled)
-            .accessibilityLabel("Number \(number), \(isCalled ? "called" : "not called")")
-            .accessibilityIdentifier("numberCell.\(number)")
+            .frame(width: diameter, height: diameter)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .aspectRatio(1, contentMode: .fit)
+        .shadow(
+            color: isCurrent ? HousieTheme.gold.opacity(0.55) : HousieTheme.royal.opacity(isCalled ? 0.12 : 0.04),
+            radius: isCurrent ? 6 : 2,
+            y: isCurrent ? 2 : 1
+        )
+        .scaleEffect(isCurrent ? 1.06 : 1)
+        .animation(.spring(response: 0.35, dampingFraction: 0.72), value: isCalled)
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCurrent)
+        .accessibilityLabel("Number \(number), \(isCalled ? "called" : "not called")")
+        .accessibilityIdentifier("numberCell.\(number)")
+    }
+
+    private var cellColor: Color {
+        if isCurrent { return HousieTheme.saffron }
+        if isCalled { return HousieTheme.royal }
+        return Color.white.opacity(0.88)
     }
 }
 
@@ -380,13 +402,13 @@ private struct AirPlayRoutePicker: UIViewRepresentable {
     func makeUIView(context: Context) -> AVRoutePickerView {
         let picker = AVRoutePickerView()
         picker.prioritizesVideoDevices = true
-        picker.tintColor = UIColor(HousieTheme.magenta)
+        picker.tintColor = UIColor(HousieTheme.royal)
         picker.activeTintColor = UIColor(HousieTheme.saffron)
         return picker
     }
 
     func updateUIView(_ picker: AVRoutePickerView, context: Context) {
-        picker.tintColor = UIColor(HousieTheme.magenta)
+        picker.tintColor = UIColor(HousieTheme.royal)
         picker.activeTintColor = UIColor(HousieTheme.saffron)
     }
 }
