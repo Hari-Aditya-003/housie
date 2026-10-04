@@ -17,7 +17,7 @@ A native SwiftUI Housie (Tambola) caller for iPhone and iPad, designed for India
 
 ## Requirements
 
-- Xcode 16 or newer
+- Xcode 26 or newer (required by Google Cast SDK 4.8.6)
 - iOS/iPadOS 17 or newer
 - CocoaPods 1.16 or newer
 - A registered Google Cast Receiver App ID for Android/Google TV casting
