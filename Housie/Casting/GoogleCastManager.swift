@@ -70,7 +70,7 @@ final class GoogleCastManager: NSObject {
     }
 }
 
-extension GoogleCastManager: @MainActor GCKSessionManagerListener {
+extension GoogleCastManager: @preconcurrency GCKSessionManagerListener {
     func sessionManager(_: GCKSessionManager, didStart session: GCKSession) {
         guard let castSession = session as? GCKCastSession else { return }
         connect(to: castSession)
