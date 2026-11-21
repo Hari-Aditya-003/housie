@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest an improvement for hosts, players, or contributors.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Search existing issues before opening a new request.
+  - type: textarea
+    id: use-case
+    attributes:
+      label: What are you trying to do?
+      description: Describe who would use this improvement and when.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should change?
+      description: Describe how the app or documentation should behave in that situation.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or examples
+      description: Share any workaround you tried, sketches, or other relevant context.

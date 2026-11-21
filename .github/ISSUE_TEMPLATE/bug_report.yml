@@ -1,0 +1,33 @@
+name: Bug report
+description: Report a reproducible problem with the caller, layout, or TV sharing.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Search existing issues before reporting. Remove personal details from screenshots and logs.
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Actual and expected behavior
+      description: Describe what happened and what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Start from a fresh launch if possible. Include the orientation and any settings that matter.
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device, OS, and app version or commit
+      placeholder: iPad Pro 13-inch simulator, iPadOS 26.3, commit abc1234
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots, logs, or casting setup
+      description: For TV issues, include AirPlay or Google Cast, the receiver model, and whether you tested on hardware.
