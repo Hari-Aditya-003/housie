@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: First contribution
+    url: https://github.com/Hari-Aditya-003/housie/blob/main/CONTRIBUTING.md
+    about: Find setup instructions and see how to pick a task and submit a pull request.
+  - name: Report abusive content
+    url: https://docs.github.com/en/communities/maintaining-your-safety-on-github/reporting-abuse-or-spam
+    about: Use GitHub’s reporting tools for sensitive conduct concerns.
